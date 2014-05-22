@@ -4,8 +4,15 @@ alias ...="cd ../.."
 alias h='cd ~'
 alias c='clear'
 
+alias web='php artisan serve'
+
 function serve() {
 	sudo dos2unix /vagrant/scripts/serve.sh
 	sudo bash /vagrant/scripts/serve.sh "$1" "$2"
 }
 
+function mysql_add_db() {
+	mysql -uroot -psecret -e "CREATE USER '$2'@'%' IDENTIFIED BY '$3'"
+	mysql -uroot -psecret -e "CREATE DATABASE $1";
+	mysql -uroot -psecret -e "GRANT ALL PRIVILEGES ON $1.* to '$2'@'%'"
+}
